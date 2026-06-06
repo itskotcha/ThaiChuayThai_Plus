@@ -422,7 +422,7 @@ createApp({
     const c = reactive({ quota: null, itemPrice: null });
     const m = reactive({ daily: 333, itemPrice: null, feePercent: null });
 
-    const maxPurchase = computed(() => (!c.quota || c.quota <= 0) ? 0 : c.quota / 0.4);
+    const maxPurchase = computed(() => (!c.quota || c.quota <= 0) ? 0 : c.quota * 0.6);
     const userPays    = computed(() => (!c.itemPrice || c.itemPrice <= 0) ? 0 : c.itemPrice * 0.4);
     const feeAmount   = computed(() => (m.daily || 0) * ((m.feePercent || 0) / 100));
     const cashBack    = computed(() => {
