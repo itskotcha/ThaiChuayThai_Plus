@@ -298,9 +298,9 @@
           <div class="accordion-content" :class="{open: info.c_quota}" style="padding-top:4px;">
             <div style="background:rgba(245,242,160,0.55);border:1.5px solid rgba(144,201,58,0.3);border-radius:12px;padding:12px 14px;">
               <p style="font-size:12.5px;color:var(--text-mid);line-height:1.7;">
-                รัฐจ่าย <span style="color:var(--blue-dark);font-weight:700;">60%</span> ของราคาสินค้า<br/>
-                ดังนั้น ยอดเงินในแอป ÷ 0.6 = ราคาสินค้าสูงสุดที่ซื้อได้<br/>
-                <span style="color:var(--text-hint);">เช่น เหลือ 200 ฿ → ซื้อสินค้าได้สูงสุด 333.33 ฿</span>
+                ซื้อสูงสุด = ยอดเงินในแอป ÷ รัฐจ่าย <span style="color:var(--blue-dark);font-weight:700;">60%</span><br/>
+                <span style="color:var(--blue-dark);font-weight:700;">= {{ fmt(c.quota||0) }} ÷ 0.6 = {{ fmt(c.maxPurchase) }} ฿</span><br/>
+                <span style="color:var(--text-hint);">ลูกค้าจ่ายส่วนต่าง 40% = {{ fmt(c.quota||0) }} ฿ จากเป๋าตัง</span>
               </p>
             </div>
           </div>
@@ -328,14 +328,14 @@
           <div class="accordion-content" :class="{open: info.c_item}" style="padding-top:4px;">
             <div style="background:rgba(245,242,160,0.55);border:1.5px solid rgba(144,201,58,0.3);border-radius:12px;padding:12px 14px;">
               <p style="font-size:12.5px;color:var(--text-mid);line-height:1.7;">
-                ส่วนที่ผู้ใช้จ่ายเอง = ราคาสินค้า × <span style="color:var(--blue-dark);font-weight:700;">40%</span><br/>
-                รัฐช่วยจ่ายส่วนที่เหลืออีก 60%<br/>
-                <span style="color:var(--text-hint);">เช่น สินค้า 100 ฿ → จ่ายเอง 40 ฿ รัฐจ่าย 60 ฿</span>
+                จ่ายเอง = ราคาสินค้า × <span style="color:var(--blue-dark);font-weight:700;">40%</span><br/>
+                <span style="color:var(--blue-dark);font-weight:700;">= {{ fmt(c.itemPrice||0) }} × 0.4 = {{ fmt(c.userPays) }} ฿</span><br/>
+                <span style="color:var(--text-hint);">รัฐช่วยจ่ายอีก 60% = {{ fmt((c.itemPrice||0)*0.6) }} ฿</span>
               </p>
             </div>
           </div>
         </div>
-
+ 
       </div>
 
       <!-- MERCHANT TAB -->
@@ -422,7 +422,7 @@ createApp({
     const c = reactive({ quota: null, itemPrice: null });
     const m = reactive({ daily: 333, itemPrice: null, feePercent: null });
 
-    const maxPurchase = computed(() => (!c.quota || c.quota <= 0) ? 0 : c.quota * 0.6);
+    const maxPurchase = computed(() => (!c.quota || c.quota <= 0) ? 0 : c.quota / 0.4);
     const userPays    = computed(() => (!c.itemPrice || c.itemPrice <= 0) ? 0 : c.itemPrice * 0.4);
     const feeAmount   = computed(() => (m.daily || 0) * ((m.feePercent || 0) / 100));
     const cashBack    = computed(() => {
