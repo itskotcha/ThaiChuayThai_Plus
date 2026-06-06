@@ -8,20 +8,40 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   * { box-sizing: border-box; }
+
+  :root {
+    --lemon-pale:  #F5F2A0;
+    --lemon-mid:   #D4E84A;
+    --lemon-deep:  #90C93A;
+    --white:       #FFFFFF;
+    --blue:        #2B7BB5;
+    --blue-dark:   #1A5A8A;
+    --blue-light:  #5BA3D4;
+    --bg:          #EFF7DC;
+    --card:        #FAFFF2;
+    --text-main:   #1C3B0A;
+    --text-mid:    #3A6015;
+    --text-muted:  #7A9E4A;
+    --text-hint:   #AABB78;
+  }
+
   body {
     font-family: 'Sarabun', sans-serif;
-    background: #0a0f1e;
+    background: var(--bg);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 10% 15%, rgba(212,232,74,0.30) 0%, transparent 40%),
+      radial-gradient(circle at 88% 78%, rgba(43,123,181,0.14) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(245,242,160,0.22) 0%, transparent 60%);
   }
 
-  /* Ambient background orbs */
   body::before, body::after {
     content: '';
     position: fixed;
@@ -30,43 +50,52 @@
     z-index: 0;
   }
   body::before {
-    width: 480px; height: 480px;
-    background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
-    top: -100px; left: -100px;
-    animation: drift1 12s ease-in-out infinite alternate;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212,232,74,0.28) 0%, transparent 70%);
+    top: -130px; left: -130px;
+    animation: drift1 14s ease-in-out infinite alternate;
   }
   body::after {
-    width: 360px; height: 360px;
-    background: radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 70%);
-    bottom: -80px; right: -80px;
-    animation: drift2 15s ease-in-out infinite alternate;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(43,123,181,0.15) 0%, transparent 70%);
+    bottom: -110px; right: -110px;
+    animation: drift2 18s ease-in-out infinite alternate;
   }
-  @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(40px, 30px); } }
-  @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-30px, -20px); } }
+  @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(50px, 35px); } }
+  @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-35px, -25px); } }
 
   .app-card {
     position: relative;
     z-index: 1;
-    background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--card);
+    border: 2px solid rgba(144,201,58,0.45);
     box-shadow:
-      0 0 0 1px rgba(16,185,129,0.05),
-      0 25px 60px rgba(0,0,0,0.7),
-      inset 0 1px 0 rgba(255,255,255,0.06);
+      0 5px 0 rgba(144,201,58,0.45),
+      0 22px 60px rgba(43,123,181,0.13),
+      inset 0 1px 0 rgba(255,255,255,0.95);
     border-radius: 28px;
     overflow: hidden;
   }
 
-  /* Top header gradient bar */
   .header-bar {
-    background: linear-gradient(135deg, #064e3b 0%, #0f172a 60%);
-    border-bottom: 1px solid rgba(16,185,129,0.15);
+    background: linear-gradient(135deg, var(--lemon-mid) 0%, var(--lemon-pale) 100%);
+    border-bottom: 2px solid rgba(144,201,58,0.45);
+    position: relative;
+    overflow: hidden;
+  }
+  .header-bar::after {
+    content: '🍋';
+    position: absolute;
+    right: -6px; top: -10px;
+    font-size: 78px;
+    opacity: 0.14;
+    transform: rotate(-15deg);
+    pointer-events: none;
   }
 
-  /* Toggle pill */
   .toggle-track {
-    background: rgba(15,23,42,0.8);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(144,201,58,0.45);
     border-radius: 9999px;
     padding: 4px;
     display: flex;
@@ -76,10 +105,10 @@
     position: absolute;
     top: 4px;
     height: calc(100% - 8px);
-    background: linear-gradient(135deg, #10b981, #0d9488);
+    background: linear-gradient(135deg, var(--lemon-deep), var(--blue));
     border-radius: 9999px;
     transition: left 0.35s cubic-bezier(0.34,1.56,0.64,1), width 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    box-shadow: 0 0 16px rgba(16,185,129,0.5);
+    box-shadow: 0 2px 10px rgba(43,123,181,0.35);
   }
   .toggle-btn {
     position: relative;
@@ -88,9 +117,8 @@
     text-align: center;
     padding: 10px 20px;
     border-radius: 9999px;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 15px;
-    letter-spacing: 0.01em;
     cursor: pointer;
     transition: color 0.25s ease;
     user-select: none;
@@ -98,12 +126,11 @@
     background: transparent;
   }
 
-  /* Inputs */
   .field-input {
-    background: rgba(2,6,23,0.7);
-    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.88);
+    border: 1.5px solid rgba(144,201,58,0.4);
     border-radius: 16px;
-    color: #f1f5f9;
+    color: var(--text-main);
     font-family: 'Space Mono', monospace;
     font-size: 16px;
     text-align: right;
@@ -116,45 +143,41 @@
   .field-input::-webkit-outer-spin-button,
   .field-input::-webkit-inner-spin-button { -webkit-appearance: none; }
   .field-input:focus {
-    border-color: rgba(16,185,129,0.6);
-    box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(43,123,181,0.15);
+    background: #fff;
   }
-  .field-input::placeholder { color: rgba(148,163,184,0.4); font-family: 'Sarabun', sans-serif; font-size: 14px; }
+  .field-input::placeholder { color: var(--text-hint); font-family: 'Sarabun', sans-serif; font-size: 14px; }
 
-  /* Result cards */
   .result-card {
-    background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(13,148,136,0.06) 100%);
-    border: 1px solid rgba(16,185,129,0.25);
+    background: linear-gradient(135deg, rgba(43,123,181,0.09) 0%, rgba(91,163,212,0.06) 100%);
+    border: 1.5px solid rgba(43,123,181,0.28);
     border-radius: 16px;
     padding: 16px 18px;
   }
   .result-value {
     font-family: 'Space Mono', monospace;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    color: #34d399;
+    color: var(--blue-dark);
     text-align: right;
     letter-spacing: -0.5px;
-    text-shadow: 0 0 20px rgba(52,211,153,0.4);
   }
   .result-label {
     font-size: 13px;
-    color: #64748b;
-    font-weight: 500;
+    color: var(--text-muted);
+    font-weight: 600;
     margin-bottom: 4px;
   }
 
-  /* Accordion */
   .accordion-content {
     overflow: hidden;
     transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
     max-height: 0;
     opacity: 0;
   }
-  .accordion-content.open {
-    max-height: 300px;
-    opacity: 1;
-  }
+  .accordion-content.open { max-height: 300px; opacity: 1; }
+
   .info-trigger {
     display: inline-flex;
     align-items: center;
@@ -162,54 +185,54 @@
     cursor: pointer;
     padding: 4px 0;
     font-size: 12px;
-    color: #475569;
+    color: var(--text-hint);
     transition: color 0.2s;
     user-select: none;
     border: none;
     background: transparent;
   }
-  .info-trigger:hover { color: #10b981; }
+  .info-trigger:hover { color: var(--blue); }
   .info-icon {
     width: 16px; height: 16px;
     border-radius: 50%;
-    border: 1px solid currentColor;
+    border: 1.5px solid currentColor;
     display: flex; align-items: center; justify-content: center;
     font-size: 10px; font-weight: 700;
     flex-shrink: 0;
   }
 
-  /* Tab content transition */
-  .tab-pane {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .tab-pane-enter { opacity: 0; transform: translateY(8px); }
+  .tab-pane { transition: opacity 0.3s ease, transform 0.3s ease; }
   .tab-pane-active { opacity: 1; transform: translateY(0); }
 
-  /* Divider */
   .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(144,201,58,0.4), transparent);
     margin: 4px 0;
   }
 
-  /* Badge */
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: rgba(16,185,129,0.12);
-    border: 1px solid rgba(16,185,129,0.2);
+    background: rgba(43,123,181,0.12);
+    border: 1px solid rgba(43,123,181,0.25);
     border-radius: 8px;
     padding: 2px 8px;
     font-size: 11px;
-    color: #34d399;
-    font-weight: 600;
+    color: var(--blue-dark);
+    font-weight: 700;
   }
 
-  /* Scrollbar */
+  .breakdown-card {
+    background: rgba(245,242,160,0.45);
+    border: 1.5px solid rgba(144,201,58,0.32);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(144,201,58,0.4); border-radius: 4px; }
 
   @media (max-height: 700px) {
     body { align-items: flex-start; padding: 16px 0; }
@@ -226,27 +249,24 @@
       <div class="flex items-start justify-between mb-1">
         <div>
           <div class="flex items-center gap-2 mb-1">
-            <div style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;"></div>
-            <span style="font-size:11px;letter-spacing:0.12em;color:#475569;font-weight:600;text-transform:uppercase;">Co-Payment Scheme</span>
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 7px rgba(43,123,181,0.55);"></div>
+            <span style="font-size:11px;letter-spacing:0.12em;color:var(--text-mid);font-weight:700;text-transform:uppercase;">Co-Payment Scheme</span>
           </div>
-          <h1 style="font-size:22px;font-weight:700;color:#f1f5f9;line-height:1.2;">คำนวณร่วมจ่าย</h1>
-          <p style="font-size:13px;color:#475569;margin-top:2px;">รัฐบาล 60% · ประชาชน 40%</p>
+          <h1 style="font-size:24px;font-weight:800;color:var(--text-main);line-height:1.2;">คำนวณร่วมจ่าย</h1>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:3px;font-weight:500;">รัฐบาล 60% · ประชาชน 40%</p>
         </div>
-        <div class="badge" style="margin-top:4px;">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-          สูงสุด 333 ฿/วัน
-        </div>
+        <div class="badge" style="margin-top:4px;">สูงสุด 333 ฿/วัน</div>
       </div>
     </div>
 
     <!-- Toggle -->
-    <div class="px-5 pb-4 pt-2" style="background:rgba(15,23,42,0.4);">
-      <div class="toggle-track" ref="toggleTrack">
+    <div class="px-5 pb-4 pt-3" style="background:rgba(245,242,160,0.22);">
+      <div class="toggle-track">
         <div class="toggle-thumb" :style="thumbStyle"></div>
-        <button class="toggle-btn" :style="tab==='customer' ? 'color:#fff' : 'color:#475569'" @click="setTab('customer')">
+        <button class="toggle-btn" :style="tab==='customer'?'color:#fff':'color:var(--text-muted)'" @click="setTab('customer')">
           👤 ลูกค้า
         </button>
-        <button class="toggle-btn" :style="tab==='merchant' ? 'color:#fff' : 'color:#475569'" @click="setTab('merchant')">
+        <button class="toggle-btn" :style="tab==='merchant'?'color:#fff':'color:var(--text-muted)'" @click="setTab('merchant')">
           🏪 ร้านค้า
         </button>
       </div>
@@ -258,36 +278,29 @@
       <!-- CUSTOMER TAB -->
       <div v-if="tab==='customer'" class="tab-pane" :class="paneClass">
 
-        <!-- Section 1: Quota -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-2">
-            <label style="font-size:13px;color:#94a3b8;font-weight:500;">ยอดที่เหลือในแอป</label>
-            <span style="font-size:11px;color:#475569;">(บาท)</span>
+            <label style="font-size:13px;color:var(--text-mid);font-weight:600;">ยอดที่เหลือในแอป</label>
+            <span style="font-size:11px;color:var(--text-hint);">(บาท)</span>
           </div>
-          <input
-            class="field-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0.00"
-            v-model.number="c.quota"
-          />
+          <input class="field-input" type="number" inputmode="decimal" placeholder="0.00" v-model.number="c.quota" />
         </div>
 
         <div class="mb-5">
           <div class="result-label">สามารถซื้อสินค้าได้สูงสุด</div>
           <div class="result-card">
-            <div class="result-value">{{ fmt(c.maxPurchase) }} <span style="font-size:14px;color:#6ee7b7;">฿</span></div>
+            <div class="result-value">{{ fmt(c.maxPurchase) }} <span style="font-size:15px;color:var(--blue-light);">฿</span></div>
           </div>
           <button class="info-trigger mt-2" @click="toggleInfo('c_quota')">
             <span class="info-icon">i</span>
             วิธีคิด (แตะเพื่ออ่านรายละเอียด)
           </button>
           <div class="accordion-content" :class="{open: info.c_quota}" style="padding-top:4px;">
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;">
-              <p style="font-size:12.5px;color:#64748b;line-height:1.7;">
-                รัฐจ่าย <span style="color:#34d399;font-weight:600;">60%</span> ของราคาสินค้า<br/>
+            <div style="background:rgba(245,242,160,0.55);border:1.5px solid rgba(144,201,58,0.3);border-radius:12px;padding:12px 14px;">
+              <p style="font-size:12.5px;color:var(--text-mid);line-height:1.7;">
+                รัฐจ่าย <span style="color:var(--blue-dark);font-weight:700;">60%</span> ของราคาสินค้า<br/>
                 ดังนั้น ยอดเงินในแอป ÷ 0.6 = ราคาสินค้าสูงสุดที่ซื้อได้<br/>
-                <span style="color:#475569;">เช่น เหลือ 200 ฿ → ซื้อสินค้าได้สูงสุด 333.33 ฿</span>
+                <span style="color:var(--text-hint);">เช่น เหลือ 200 ฿ → ซื้อสินค้าได้สูงสุด 333.33 ฿</span>
               </p>
             </div>
           </div>
@@ -295,36 +308,29 @@
 
         <div class="section-divider my-4"></div>
 
-        <!-- Section 2: Item price -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-2">
-            <label style="font-size:13px;color:#94a3b8;font-weight:500;">ราคาสินค้า</label>
-            <span style="font-size:11px;color:#475569;">(บาท)</span>
+            <label style="font-size:13px;color:var(--text-mid);font-weight:600;">ราคาสินค้า</label>
+            <span style="font-size:11px;color:var(--text-hint);">(บาท)</span>
           </div>
-          <input
-            class="field-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0.00"
-            v-model.number="c.itemPrice"
-          />
+          <input class="field-input" type="number" inputmode="decimal" placeholder="0.00" v-model.number="c.itemPrice" />
         </div>
 
         <div class="mb-2">
           <div class="result-label">ต้องมีเงินในเป๋าตัง / จ่ายเอง</div>
           <div class="result-card">
-            <div class="result-value">{{ fmt(c.userPays) }} <span style="font-size:14px;color:#6ee7b7;">฿</span></div>
+            <div class="result-value">{{ fmt(c.userPays) }} <span style="font-size:15px;color:var(--blue-light);">฿</span></div>
           </div>
           <button class="info-trigger mt-2" @click="toggleInfo('c_item')">
             <span class="info-icon">i</span>
             วิธีคิด (แตะเพื่ออ่านรายละเอียด)
           </button>
           <div class="accordion-content" :class="{open: info.c_item}" style="padding-top:4px;">
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;">
-              <p style="font-size:12.5px;color:#64748b;line-height:1.7;">
-                ส่วนที่ผู้ใช้จ่ายเอง = ราคาสินค้า × <span style="color:#34d399;font-weight:600;">40%</span><br/>
+            <div style="background:rgba(245,242,160,0.55);border:1.5px solid rgba(144,201,58,0.3);border-radius:12px;padding:12px 14px;">
+              <p style="font-size:12.5px;color:var(--text-mid);line-height:1.7;">
+                ส่วนที่ผู้ใช้จ่ายเอง = ราคาสินค้า × <span style="color:var(--blue-dark);font-weight:700;">40%</span><br/>
                 รัฐช่วยจ่ายส่วนที่เหลืออีก 60%<br/>
-                <span style="color:#475569;">เช่น สินค้า 100 ฿ → จ่ายเอง 40 ฿ รัฐจ่าย 60 ฿</span>
+                <span style="color:var(--text-hint);">เช่น สินค้า 100 ฿ → จ่ายเอง 40 ฿ รัฐจ่าย 60 ฿</span>
               </p>
             </div>
           </div>
@@ -335,179 +341,124 @@
       <!-- MERCHANT TAB -->
       <div v-if="tab==='merchant'" class="tab-pane" :class="paneClass">
 
-        <!-- Input 1 -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-2">
-            <label style="font-size:13px;color:#94a3b8;font-weight:500;">ร้านใช้สิทธิ์วันละ</label>
-            <span class="badge" style="font-size:10px;">บางร้าน 334 ฿</span>
+            <label style="font-size:13px;color:var(--text-mid);font-weight:600;">ร้านใช้สิทธิ์วันละ</label>
+            <span class="badge">บางร้าน 334 ฿</span>
           </div>
-          <input
-            class="field-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="333"
-            v-model.number="m.daily"
-          />
+          <input class="field-input" type="number" inputmode="decimal" placeholder="333" v-model.number="m.daily" />
         </div>
 
-        <!-- Input 2 -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-2">
-            <label style="font-size:13px;color:#94a3b8;font-weight:500;">ราคาสินค้าจริง</label>
-            <span style="font-size:11px;color:#475569;">(บาท)</span>
+            <label style="font-size:13px;color:var(--text-mid);font-weight:600;">ราคาสินค้าจริง</label>
+            <span style="font-size:11px;color:var(--text-hint);">(บาท)</span>
           </div>
-          <input
-            class="field-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0.00"
-            v-model.number="m.itemPrice"
-          />
+          <input class="field-input" type="number" inputmode="decimal" placeholder="0.00" v-model.number="m.itemPrice" />
         </div>
 
-        <!-- Input 3 -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-2">
-            <label style="font-size:13px;color:#94a3b8;font-weight:500;">เปอร์เซ็นต์ที่ร้านค้าหัก</label>
-            <span style="font-size:11px;color:#475569;">(%)</span>
+            <label style="font-size:13px;color:var(--text-mid);font-weight:600;">เปอร์เซ็นต์ที่ร้านค้าหัก</label>
+            <span style="font-size:11px;color:var(--text-hint);">(%)</span>
           </div>
-          <input
-            class="field-input"
-            type="number"
-            inputmode="decimal"
-            placeholder="0.00"
-            v-model.number="m.feePercent"
-          />
+          <input class="field-input" type="number" inputmode="decimal" placeholder="0.00" v-model.number="m.feePercent" />
         </div>
 
-        <!-- Breakdown mini -->
-        <div class="mb-4" style="background:rgba(2,6,23,0.4);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:12px 14px;">
+        <div class="breakdown-card mb-4">
           <div class="flex justify-between mb-1">
-            <span style="font-size:12px;color:#475569;">ยอดสแกน</span>
-            <span style="font-family:'Space Mono',monospace;font-size:12px;color:#64748b;">{{ fmt(m.daily || 0) }} ฿</span>
+            <span style="font-size:12px;color:var(--text-muted);">ยอดสแกน</span>
+            <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--text-mid);">{{ fmt(m.daily || 0) }} ฿</span>
           </div>
           <div class="flex justify-between mb-1">
-            <span style="font-size:12px;color:#475569;">ค่าสินค้า</span>
-            <span style="font-family:'Space Mono',monospace;font-size:12px;color:#ef4444;">− {{ fmt(m.itemPrice || 0) }} ฿</span>
+            <span style="font-size:12px;color:var(--text-muted);">ค่าสินค้า</span>
+            <span style="font-family:'Space Mono',monospace;font-size:12px;color:#b83232;">− {{ fmt(m.itemPrice || 0) }} ฿</span>
           </div>
           <div class="flex justify-between">
-            <span style="font-size:12px;color:#475569;">ค่าธรรมเนียม ({{ fmt(m.feePercent || 0) }}%)</span>
-            <span style="font-family:'Space Mono',monospace;font-size:12px;color:#ef4444;">− {{ fmt(m.feeAmount) }} ฿</span>
+            <span style="font-size:12px;color:var(--text-muted);">ค่าธรรมเนียม ({{ fmt(m.feePercent || 0) }}%)</span>
+            <span style="font-family:'Space Mono',monospace;font-size:12px;color:#b83232;">− {{ fmt(m.feeAmount) }} ฿</span>
           </div>
         </div>
 
-        <!-- Result -->
         <div class="mb-2">
           <div class="result-label">เงินสดที่ต้องทอนให้ลูกค้า</div>
           <div class="result-card">
-            <div class="result-value">{{ fmt(m.cashBack) }} <span style="font-size:14px;color:#6ee7b7;">฿</span></div>
+            <div class="result-value">{{ fmt(m.cashBack) }} <span style="font-size:15px;color:var(--blue-light);">฿</span></div>
           </div>
           <button class="info-trigger mt-2" @click="toggleInfo('m_calc')">
             <span class="info-icon">i</span>
             วิธีคิด (แตะเพื่ออ่านรายละเอียด)
           </button>
           <div class="accordion-content" :class="{open: info.m_calc}" style="padding-top:4px;">
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;">
-              <p style="font-size:12.5px;color:#64748b;line-height:1.7;">
+            <div style="background:rgba(245,242,160,0.55);border:1.5px solid rgba(144,201,58,0.3);border-radius:12px;padding:12px 14px;">
+              <p style="font-size:12.5px;color:var(--text-mid);line-height:1.7;">
                 เงินทอน = ยอดสแกน − ราคาสินค้า − (ยอดสแกน × เปอร์เซ็นต์หัก)<br/>
-                <span style="color:#34d399;font-weight:600;">= {{ fmt(m.daily||0) }} − {{ fmt(m.itemPrice||0) }} − {{ fmt(m.feeAmount) }}</span><br/>
-                <span style="color:#475569;">หากผลลบ แสดงเป็น 0 ฿ (ไม่ทอนเงิน)</span>
+                <span style="color:var(--blue-dark);font-weight:700;">= {{ fmt(m.daily||0) }} − {{ fmt(m.itemPrice||0) }} − {{ fmt(m.feeAmount) }}</span><br/>
+                <span style="color:var(--text-hint);">หากผลลบ แสดงเป็น 0 ฿ (ไม่ทอนเงิน)</span>
               </p>
             </div>
           </div>
         </div>
 
       </div>
-
     </div>
 
     <!-- Footer -->
-    <div style="border-top:1px solid rgba(255,255,255,0.05);padding:12px 20px;text-align:center;">
-      <p style="font-size:11px;color:#334155;letter-spacing:0.05em;">โครงการร่วมจ่าย · คำนวณเพื่อความสะดวก</p>
+    <div style="border-top:1.5px solid rgba(144,201,58,0.28);padding:12px 20px;text-align:center;background:rgba(245,242,160,0.18);">
+      <p style="font-size:11px;color:var(--text-hint);letter-spacing:0.05em;">โครงการร่วมจ่าย · คำนวณเพื่อความสะดวก 🍋</p>
     </div>
 
   </div>
 </div>
 
 <script>
-const { createApp, ref, reactive, computed, nextTick, onMounted } = Vue;
+const { createApp, ref, reactive, computed, nextTick } = Vue;
 
 createApp({
   setup() {
     const tab = ref('customer');
     const paneClass = ref('tab-pane-active');
+    const info = reactive({ c_quota: false, c_item: false, m_calc: false });
+    const c = reactive({ quota: null, itemPrice: null });
+    const m = reactive({ daily: 333, itemPrice: null, feePercent: null });
 
-    const info = reactive({
-      c_quota: false,
-      c_item: false,
-      m_calc: false,
-    });
-
-    const c = reactive({
-      quota: null,
-      itemPrice: null,
-    });
-
-    const m = reactive({
-      daily: 333,
-      itemPrice: null,
-      feePercent: null,
+    const maxPurchase = computed(() => (!c.quota || c.quota <= 0) ? 0 : c.quota / 0.6);
+    const userPays    = computed(() => (!c.itemPrice || c.itemPrice <= 0) ? 0 : c.itemPrice * 0.4);
+    const feeAmount   = computed(() => (m.daily || 0) * ((m.feePercent || 0) / 100));
+    const cashBack    = computed(() => {
+      const v = (m.daily || 0) - (m.itemPrice || 0) - feeAmount.value;
+      return v < 0 ? 0 : v;
     });
 
-    // Customer computed
-    const maxPurchase = computed(() => {
-      if (!c.quota || c.quota <= 0) return 0;
-      return c.quota / 0.6;
-    });
-    const userPays = computed(() => {
-      if (!c.itemPrice || c.itemPrice <= 0) return 0;
-      return c.itemPrice * 0.4;
-    });
-
-    // Merchant computed
-    const feeAmount = computed(() => {
-      const d = m.daily || 0;
-      const f = m.feePercent || 0;
-      return d * (f / 100);
-    });
-    const cashBack = computed(() => {
-      const d = m.daily || 0;
-      const p = m.itemPrice || 0;
-      const result = d - p - feeAmount.value;
-      return result < 0 ? 0 : result;
-    });
-
-    // Attach computed to reactive proxies for template use
     const cProxy = new Proxy(c, {
-      get(target, key) {
-        if (key === 'maxPurchase') return maxPurchase.value;
-        if (key === 'userPays') return userPays.value;
-        return target[key];
+      get(t, k) {
+        if (k === 'maxPurchase') return maxPurchase.value;
+        if (k === 'userPays') return userPays.value;
+        return t[k];
       },
-      set(target, key, val) { target[key] = val; return true; }
+      set(t, k, v) { t[k] = v; return true; }
     });
     const mProxy = new Proxy(m, {
-      get(target, key) {
-        if (key === 'feeAmount') return feeAmount.value;
-        if (key === 'cashBack') return cashBack.value;
-        return target[key];
+      get(t, k) {
+        if (k === 'feeAmount') return feeAmount.value;
+        if (k === 'cashBack') return cashBack.value;
+        return t[k];
       },
-      set(target, key, val) { target[key] = val; return true; }
+      set(t, k, v) { t[k] = v; return true; }
     });
 
     function fmt(val) {
       if (!val && val !== 0) return '0';
-      if (Number.isInteger(val) || Math.abs(val - Math.round(val)) < 0.001) {
+      if (Number.isInteger(val) || Math.abs(val - Math.round(val)) < 0.001)
         return Math.round(val).toLocaleString('th-TH');
-      }
       return parseFloat(val.toFixed(2)).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    const thumbStyle = computed(() => {
-      return tab.value === 'customer'
+    const thumbStyle = computed(() =>
+      tab.value === 'customer'
         ? { left: '4px', width: 'calc(50% - 4px)' }
-        : { left: 'calc(50%)', width: 'calc(50% - 4px)' };
-    });
+        : { left: 'calc(50%)', width: 'calc(50% - 4px)' }
+    );
 
     function setTab(t) {
       if (tab.value === t) return;
@@ -516,9 +467,7 @@ createApp({
       nextTick(() => { paneClass.value = 'tab-pane-active'; });
     }
 
-    function toggleInfo(key) {
-      info[key] = !info[key];
-    }
+    function toggleInfo(key) { info[key] = !info[key]; }
 
     return { tab, c: cProxy, m: mProxy, info, fmt, thumbStyle, setTab, toggleInfo, paneClass };
   }
